@@ -1,65 +1,55 @@
 <!DOCTYPE html>
-
 <html>
 
 <head>
   <meta charset="utf-8">
+  <title>Join | NodeChatApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="/css/styles.css" />
-  <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700,800,900&display=swap" />
-</head>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap" rel="stylesheet"></head>
 
-<body class="chat">
-  <div class="chat__sidebar">
-    <h3>People</h3>
-    <div id="users"></div>
+<body class="centered-form">
+  <div class="centered-form__form">
+    <form>
+      <div class="form-field">
+        <h3>Join a Chat</h3>
+      </div>
+      <div class="form-field">
+        <label>Display Name</label>
+        <input type="text" name="name" placeholder="name" autofocus />
+      </div>
+      <div class="form-field room-field">
+        <label>Room Name</label>
+        <input type="text" name="room" placeholder="type room or select" />
+      </div>
+      <div class="form-field">
+        <button>Join</button>
+      </div>
+    </form>
   </div>
-  <div class="chat__main">
-    <ol id="messages" class="chat__messages">
-
-    </ol>
-    <div class="chat__footer">
-      <form id="message-form">
-        <input name="message" type="text" placeholder="Enter your message" autofocus autocomplete="off" />
-        <button>Send</button>
-      </form>
-      <button id="send-location">Send Location</button>
-
-
-    </div>
-
-
-  </div>
-
-  <script id="message-template" type="text/template">
-    <li class="message">
-      <div class="message__title">
-        <h4>{{from}}</h4>
-        <span>{{createdAt}}</span>
-
-      </div>
-      <div class="message__body">
-        <p>{{text}}</p>
-      </div>
-    </li>
-  </script>
-  <script id="location-message-template" type="text/template">
-    <li class="message">
-      <div class="message__title">
-        <h4>{{from}}</h4>
-        <span>{{createdAt}}</span>
-
-      </div>
-      <div class="message__body">
-        <a target="_blank" href="{{url}}">My Current Location</p>
-      </div>
-    </li>
-  </script>
-
+  
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/libs/jquery-3.1.0.min.js"></script>
   <script src="/js/libs/moment.js"></script>
   <script src="/js/libs/mustache.js"></script>
   <script src="/js/index.js"></script>
+
+  <script>
+    $("form").on('submit', function (e) {
+      e.preventDefault();
+      let name = $('[name=name').val();
+      let room = $('[name=room]').val();
+
+      if (name && room) {
+        localStorage.setItem("name", name);
+        localStorage.setItem("room", room.toLowerCase());
+        window.location.href = "/chat.html";
+      }else{
+        alert('Both name and room are required!');
+      }
+    });
+  </script>
+
 </body>
 
 </html>

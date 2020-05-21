@@ -1,94 +1,37 @@
-var socket = io();
-
-function scrollToBottom() {
-  // Selectors
-  let messages = $("#messages");
-  let newMessage = messages.children('li:last-child');
-
-  //Heights 
-  let clientHeight = messages.prop('clientHeight');
-  let scrollTop = messages.prop('scrollTop');
-  let scrollHeight = messages.prop('scrollHeight');
-
-  let newMessageHeight = newMessage.innerHeight();
-  let lastMessageHeight = newMessage.prev().innerHeight();
-
-  if ( clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
-    messages.scrollTop(scrollHeight);
-  }
-}
+const socket = io();
 
 socket.on('connect', function () {
-  console.log('Connected to server');
-});
 
-socket.on('disconnect', function () {
-  console.log('Disconnected from server');
-});
+    $(".select-room-field").html();
 
+    socket.emit('fetchAllRooms', function (rooms) {
 
-socket.on('newMessage', function (message) {
+        $(".select-room-field").remove();
 
-  let formattedTime = moment(message.createdAt).format('h:mm a');
+        let select = $("<select></select>");
+        select.attr('name', 'select-room-field');
+        select.attr('class', 'select-room-field');
 
-  let template = $('#message-template').html();
-  let html = Mustache.render(template, {
-    text: message.text,
-    from: message.from,
-    createdAt: formattedTime
-  });
-
-  $("#messages").append(html);
-  scrollToBottom();
-
-});
+        let option = $("<option></option>");
+        option.text('select');
+        option.attr('disabled', 'disabled');
+        option.attr('selected', 'true');
+        select.append(option);
 
 
+        for (room in rooms) {
+            let option = $("<option></option>")
+            option.text(room);
+            option.attr('val', room);
+            select.append(option);
+        }
 
-socket.on('newLocationMessage', function (message) {
-
-  let formattedTime = moment(message.createdAt).format('h:mm a');
-
-  let template = $('#location-message-template').html();
-  let html = Mustache.render(template, {
-    url: message.url,
-    from: message.from,
-    createdAt: formattedTime
-  });
-
-  $("#messages").append(html);
-  scrollToBottom();
+        $('[name=room]').after(select)
+    });
 
 });
 
-$("#send-location").on('click', function () {
-  if (!navigator.geolocation) {
-    return alert('Geolocation not supported by your browser');
-  }
 
-  let locationButton = $("#send-location");
-  locationButton.attr('disabled', 'disabled').text('Sending Location...');
-
-  navigator.geolocation.getCurrentPosition(function (position) {
-    locationButton.removeAttr('disabled').text('Send Location');
-    socket.emit('createLocationMessage', {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude
-    })
-  }, function () {
-    locationButton.removeAttr('disabled').text('Send Location');
-  });
-
+$("body").on('change', '.select-room-field', function (e) {
+    $('[name=room]').val(e.target.value);
 });
-$("#message-form").on('submit', function (e) {
-  e.preventDefault();
-
-  var messageTextBox = $('[name=message]');
-  socket.emit('createMessage', {
-    text: messageTextBox.val(),
-    from: 'Nikhil'
-  }, function (messageFromServer) {
-    messageTextBox.val('');
-  });
-});
-

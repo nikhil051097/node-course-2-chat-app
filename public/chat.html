@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Join | NodeChatApp</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <link rel="stylesheet" href="/css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap" rel="stylesheet"></head>
+
+<body class="">
+  <!-- <nav style="z-index: -1;position: absolute;width: 100%; height: 50px; background-color: #fff">
+    <a  href="javascript:void(0)" class="slide_sidebar_button" onclick="openSideNav()">&#9776;</a>
+    <a  href="javascript:void(0)" class="close_sidebar_button" onclick="closeSideNav()">&times;</a>
+  </nav> -->
+  <div class="chat">
+  <div class="chat__sidebar">
+    <h3 id="room-name">People</h3>
+    <div id="users"></div>
+  </div>
+
+  <div class="chat__main" >
+    <ol id="messages" class="chat__messages">
+
+    </ol>
+    <div class="chat__footer">
+      <form id="message-form">
+        <input name="message" type="text" placeholder="Enter your message" autofocus autocomplete="off" />
+        <button>Send</button>
+      </form>
+      <button id="send-location">Send Location</button>
+
+
+    </div>
+
+</div>
+  </div>
+
+  <script id="message-template" type="text/template">
+    <li class="message {{class}}">
+      <div class="message__title">
+        <h4>{{from}}</h4>
+        <span>{{createdAt}}</span>
+      </div>
+      <div class="message__body">
+        <p>{{text}}</p>
+      </div>
+    </li>
+  </script>
+  <script id="location-message-template" type="text/template">
+    <li class="message">
+      <div class="message__title">
+        <h4>{{from}}</h4>
+        <span>{{createdAt}}</span>
+
+      </div>
+      <div class="message__body">
+        <a target="_blank" href="{{url}}">My Current Location</p>
+      </div>
+    </li>
+  </script>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/libs/jquery-3.1.0.min.js"></script>
+  <script src="/js/libs/moment.js"></script>
+  <script src="/js/libs/deparam.js"></script>
+  <script src="/js/libs/mustache.js"></script>
+  <script src="/js/chat.js"></script>
+</body>
+
+</html>
