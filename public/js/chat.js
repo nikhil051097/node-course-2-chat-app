@@ -106,13 +106,19 @@ $("#send-location").on('click', function () {
 });
 
 $("#send-image-icon").on('click', function(){
+  $("#send-image-icon").attr('disabled', true);
+  $("#close-image-icon").attr('disabled', true);
+
+  
   socket.emit('createImageMessage', {
     image: $("#image-to-send").attr('src')
   }, function(){
-    
+    $("#send-image-icon").attr('disabled', false);
+    $("#close-image-icon").attr('disabled', false);
+
     $("#image-to-send-container > img").attr('src','');
     $("#image-to-send-container").css({"display": "none"});
-  })
+  });
 });
 
 $("#close-image-icon").on('click', function(){

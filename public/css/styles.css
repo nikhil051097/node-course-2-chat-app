@@ -237,6 +237,12 @@ nav {
     width: 40px;
     margin-left: 15px;
 }
+#send-image-icon:disabled, #send-image-icon[disabled]{
+    opacity: 0.5;
+}
+#close-image-icon:disabled, #close-image-icon[disabled]{
+    opacity: 0.5;
+}
 
 @media (max-width: 600px) {
     * {
