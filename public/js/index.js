@@ -11,6 +11,7 @@ socket.on('connect', function () {
         let select = $("<select></select>");
         select.attr('name', 'select-room-field');
         select.attr('class', 'select-room-field');
+        
 
         let option = $("<option></option>");
         option.text('select');

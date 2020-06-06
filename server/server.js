@@ -4,7 +4,7 @@ const express = require('express');
 const socketIO = require('socket.io');
 
 
-const { generateMessage, generateLocationMessage } = require('./utils/message');
+const { generateMessage, generateLocationMessage, generateImageMessage } = require('./utils/message');
 const { isValidString } = require('./utils/validation');
 const { Users } = require('./utils/users');
 
@@ -27,6 +27,14 @@ io.on('connection', (socket) => {
     if (user && isValidString(message.text)) {
 
       io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));
+      callback();
+    }
+  });
+
+  socket.on('createImageMessage', (message, callback) => {
+    let user = users.getUser(socket.id);
+    if(user && isValidString(message.image)){
+      io.to(user.room).emit('newImageMessage', generateImageMessage(user.name, message.image));
       callback();
     }
   });
@@ -69,6 +77,8 @@ io.on('connection', (socket) => {
 
   });
 
+
+
   socket.on('fetchAllRooms', (callback) => {
     let rooms = users.getRooms();
     callback(rooms);
@@ -83,6 +93,16 @@ io.on('connection', (socket) => {
   //     socket.broadcast.to(user.room).emit('voice', blob);
   //   }
   // });
+
+  // Future Implementation for personal chat message
+  //   socket.on('personalMessgeBeginRequest', (params, callback)=>{
+
+  //     let user1 = socket.id;
+  //     let user2 = params.to;
+  //     users.createPersonalRoom(user1, user2);
+
+  //     callback(users.getPersonalRoom(user1, user2));
+  //   });
 
   socket.on('disconnect', () => {
     let user = users.removeUser(socket.id);

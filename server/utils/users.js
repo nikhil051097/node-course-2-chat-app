@@ -7,6 +7,7 @@
 class Users{
     constructor(){
         this.users = [];
+        this.personalRooms = {};
     }
     addUser (id, name, room){
         let user = {id, name, room};
@@ -20,7 +21,7 @@ class Users{
     }
     getUserList (room){
         let users = this.users.filter(user => user.room === room);
-        let usersNamesArray = users.map(user => user.name)
+        let usersNamesArray = users.map(user => {return {name: user.name, id: user.id}})
         return usersNamesArray;
     }
     getUser(id){
@@ -37,6 +38,27 @@ class Users{
           }
         });
         return rooms;
+    }
+    getPersonalRoom(user1, user2){
+        if(this.personalRooms[`${user1}__${user2}`]){
+            return `${user1}__${user2}`;
+        }else if(this.personalRooms[`${user2}__${user1}`]){
+            return `${user2}__${user1}`;
+        }else{
+            return undefined;
+        }
+    }
+    createPersonalRoom(user1, user2){
+
+        let room = this.getPersonalRoom(user1, user2);
+        
+        if(!room){
+            // Create a personal room
+            this.personalRooms[`${user1}__${user2}`] = 1;
+            return `${user1}__${user2}`;
+        }else{
+            return room;
+        }
     }
 }
 

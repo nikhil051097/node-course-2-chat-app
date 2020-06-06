@@ -7,29 +7,46 @@
   <title>Join | NodeChatApp</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="/css/styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap" rel="stylesheet"></head>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap" rel="stylesheet">
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/js/all.min.js" rel="stylesheet"> -->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+
+</head>
 <body class="">
-  <!-- <nav style="z-index: -1;position: absolute;width: 100%; height: 50px; background-color: #fff">
-    <a  href="javascript:void(0)" class="slide_sidebar_button" onclick="openSideNav()">&#9776;</a>
-    <a  href="javascript:void(0)" class="close_sidebar_button" onclick="closeSideNav()">&times;</a>
-  </nav> -->
   <div class="chat">
   <div class="chat__sidebar">
-    <h3 id="room-name">People</h3>
+    <h5 class="white-text" id="room-name">People</h5>
     <div id="users"></div>
   </div>
 
   <div class="chat__main" >
+    <div id="image-to-send-container">
+      <img id="image-to-send" class="responsive-img" src=""  />
+      <div class="center">
+
+        <i id="close-image-icon" class="fas fa-times"></i>
+        <i id="send-image-icon" class="fas fa-paper-plane"></i>
+      </div>
+    </div>
+    <button id="leave-room">Leave</button>
     <ol id="messages" class="chat__messages">
 
     </ol>
+    <input id="image-file" style="visibility:hidden;" accept="image/*"  type="file">
+
     <div class="chat__footer">
-      <form id="message-form">
-        <input name="message" type="text" placeholder="Enter your message" autofocus autocomplete="off" />
-        <button>Send</button>
+      <form id="message-form" class="browser-default">
+        <input name="message" type="text" class="browser-default" placeholder="Enter your message" autofocus autocomplete="off" />
+    
+            <i id="open-image-modal" class="fas fa-file-image"></i>
+        
+
+        <button class="browser-default">Send</button>
       </form>
-      <button id="send-location">Send Location</button>
+      <button id="send-location" class="browser-default">Send Location</button>
 
 
     </div>
@@ -40,18 +57,18 @@
   <script id="message-template" type="text/template">
     <li class="message {{class}}">
       <div class="message__title">
-        <h4>{{from}}</h4>
+        <h6>{{from}}</h6>
         <span>{{createdAt}}</span>
       </div>
       <div class="message__body">
         <p>{{text}}</p>
-      </div>
+        </div>
     </li>
   </script>
   <script id="location-message-template" type="text/template">
     <li class="message">
       <div class="message__title">
-        <h4>{{from}}</h4>
+        <h6>{{from}}</h6>
         <span>{{createdAt}}</span>
 
       </div>
@@ -60,9 +77,23 @@
       </div>
     </li>
   </script>
+  <script id="image-message-template" type="text/template">
+    <li class="message">
+      <div class="message__title">
+        <h6>{{from}}</h6>
+        <span>{{createdAt}}</span>
+
+      </div>
+      <div class="message__body">
+        <img class="materialboxed responsive-img" width="300"  src="{{image}}"  />
+      </div>
+    </li>
+  </script>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/libs/jquery-3.1.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
   <script src="/js/libs/moment.js"></script>
   <script src="/js/libs/deparam.js"></script>
   <script src="/js/libs/mustache.js"></script>

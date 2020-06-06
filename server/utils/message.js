@@ -15,4 +15,11 @@ const generateLocationMessage = (from, latitude, longitude) => {
     }
 };
 
-module.exports = { generateMessage, generateLocationMessage }
+const generateImageMessage = (from, image) => {
+    return {
+        from,
+        image,
+        createdAt: moment().valueOf()
+    }
+}
+module.exports = { generateMessage, generateLocationMessage, generateImageMessage }

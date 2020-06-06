@@ -7,20 +7,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="/css/styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap" rel="stylesheet"></head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  
 
 <body class="centered-form">
   <div class="centered-form__form">
     <form>
       <div class="form-field">
-        <h3>Join a Chat</h3>
+        <h5 class="center">Join a Chat</h5>
       </div>
       <div class="form-field">
         <label>Display Name</label>
-        <input type="text" name="name" placeholder="name" autofocus />
+        <input type="text" class="browser-default"  name="name" placeholder="name" autofocus />
       </div>
       <div class="form-field room-field">
         <label>Room Name</label>
-        <input type="text" name="room" placeholder="type room or select" />
+        <input type="text" class="browser-default" name="room" placeholder="type room or select" />
       </div>
       <div class="form-field">
         <button>Join</button>
@@ -30,6 +33,8 @@
   
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/libs/jquery-3.1.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
   <script src="/js/libs/moment.js"></script>
   <script src="/js/libs/mustache.js"></script>
   <script src="/js/index.js"></script>
